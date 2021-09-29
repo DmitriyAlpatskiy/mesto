@@ -1,0 +1,11 @@
+.popup__prof {
+  width: 100%;
+  border: 0;
+  box-sizing: border-box;
+  border-bottom: 1px solid rgba(188, 188, 196, 0.2);
+  margin: 30px 0 48px 0;
+}
+
+.popup__prof:focus {
+  outline-color: transparent;
+}

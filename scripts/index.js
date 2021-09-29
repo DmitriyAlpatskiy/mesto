@@ -1,6 +1,6 @@
 const modalWindow = document.querySelector('.popup');
 const modalWindowCloseBtn = modalWindow.querySelector('.popup__close');
-const aboutProjectlink = document.querySelector('.profile-info__edit');
+const aboutProjectlink = document.querySelector('.profile__edit');
 
 function toggleModalWindow() {
     modalWindow.classList.toggle('popup__is-opened');
@@ -25,8 +25,8 @@ let nameImputValue = nameInput.value;
 let jobInputValue = jobInput.value;
 
 // выбрал эл-ты, куда буду вставлять значения полей 
-let ProfileInfoTitle = document.querySelector('.profile-info__title');
-let ProfileInfoSubtitle = document.querySelector('.profile-info__subtitle');
+let ProfileInfoTitle = document.querySelector('.profile__title');
+let ProfileInfoSubtitle = document.querySelector('.profile__subtitle');
 
 // вставил новые значения 
 ProfileInfoTitle.textContent = nameImputValue;
