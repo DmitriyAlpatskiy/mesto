@@ -9,9 +9,18 @@
   line-height: 48px;
 }
 
-@media (max-width: 320px) {
+@media (max-width: 458px) {
   .profile__title {
     font-size: 27px;
     line-height: 33px;
+  }
+}
+
+@media (max-width: 320px) {
+  .profile__title {
+    max-width: 294px;
+    width: 100%;
+    padding-bottom: 14px;
+    padding-left: 49px;
   }
 }

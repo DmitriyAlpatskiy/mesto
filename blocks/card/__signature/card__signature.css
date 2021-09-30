@@ -3,9 +3,10 @@
   align-items: center;
   justify-content: space-between;
   align-items: center;
-  min-height: 79px;
-  padding: 0 21px 0 15px;
+  padding: 21px 15px 25px 21px;
   max-width: 282px;
   width: 100%;
   box-sizing: border-box;
 }
+
+

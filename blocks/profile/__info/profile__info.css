@@ -1,5 +1,7 @@
 .profile__info {
-  padding-left: 30px;
-  padding-right: 25px;
+  max-width: 486px;
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 }
-

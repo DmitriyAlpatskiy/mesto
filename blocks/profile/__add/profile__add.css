@@ -17,5 +17,6 @@
   .profile__add {
     border-radius: 2px;
     width: 282px; 
+    background: transparent url(../../../images/plus_320.svg) center no-repeat;
   }
 }
