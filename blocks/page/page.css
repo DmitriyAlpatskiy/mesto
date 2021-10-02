@@ -1,0 +1,22 @@
+.page {
+  background-color: #000000;
+  color: #fff;
+}
+
+@media (max-width: 989px) {
+  .page {
+    padding: 0 35px 0 35px;
+  }
+}
+
+@media (max-width: 989px) {
+  .page {
+    padding: 0 15px 0 15px;
+  }
+}
+
+@media (max-width: 320px) {
+  .page {
+    padding: 0 0 0 0;
+  }
+}
