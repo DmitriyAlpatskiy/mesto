@@ -1,5 +1,6 @@
 .profile__edit {
   width: 24px;
+  /* width: 100%; */
   height: 24px;
   background: transparent url(../../../images/edit.svg) center no-repeat;
   border: 1px solid #ffffff;
