@@ -12,13 +12,13 @@ let profileInfoSubtitle = document.querySelector('.profile__subtitle');
 function addModalWindow() {
     nameInput.value = profileInfoTitle.textContent;
     jobInput.value = profileInfoSubtitle.textContent;
-    modalWindow.classList.add('popup__opened');
+    modalWindow.classList.add('popup_opened');
 }
 
 aboutProjectLink.addEventListener('click', addModalWindow);
 
 function removeModalWindow() {
-    modalWindow.classList.remove('popup__opened');
+    modalWindow.classList.remove('popup_opened');
 }
 
 // обработчик отправки формы
@@ -28,8 +28,8 @@ function formSubmitHandler (evt) {
 // // вставил новые значения 
 profileInfoTitle.textContent = nameInput.value;
 profileInfoSubtitle.textContent = jobInput.value;
-}
 modalWindowCloseBtn.addEventListener('click', removeModalWindow);
+}
 
 formElement.addEventListener('submit', formSubmitHandler); 
 
