@@ -28,8 +28,8 @@ function formSubmitHandler (evt) {
 // // вставил новые значения 
 profileInfoTitle.textContent = nameInput.value;
 profileInfoSubtitle.textContent = jobInput.value;
-modalWindowCloseBtn.addEventListener('click', removeModalWindow);
+removeModalWindow();
 }
 
 formElement.addEventListener('submit', formSubmitHandler); 
-
+modalWindowCloseBtn.addEventListener('click', removeModalWindow);
