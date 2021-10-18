@@ -13,7 +13,4 @@
   cursor: pointer;
 }
 
-.card__like:active {
-  background: transparent url(../../../images/heart1.svg) center no-repeat;
-  opacity: 1;
-}
+

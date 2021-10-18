@@ -1,0 +1,15 @@
+.card__del {
+  width: 18px;
+  height: 20px;
+  top: 18px;
+  right: 15px;
+  position: absolute;
+  background: none;
+  background-image: url(../../../images/trash.svg);
+  border: 0;
+}
+
+.card__del:hover {
+  opacity: 0.6;
+  cursor: pointer;
+}

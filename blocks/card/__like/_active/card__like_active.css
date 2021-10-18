@@ -1,0 +1,4 @@
+.card__like_active {
+    background: transparent url(../../../../images/heart1.svg) center no-repeat;
+    opacity: 1;
+  }
