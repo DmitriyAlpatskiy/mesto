@@ -25,129 +25,154 @@ const initialCards = [
     }
   ];
 
-const modalWindow = document.querySelector('.popup');
-const modalWindowCloseBtn = modalWindow.querySelector('.popup__close');
-const aboutProjectLink = document.querySelector('.profile__edit');
-let formElement = document.querySelector('.popup__form');
-let nameInput = formElement.querySelector('.popup__input_value_name');
-let jobInput = formElement.querySelector('.popup__input_value_prof');
-let profileInfoTitle = document.querySelector('.profile__title');
-let profileInfoSubtitle = document.querySelector('.profile__subtitle');
-// для popup-photo
-const popupPhoto = document.querySelector('.popup-photo');
-const popupPhotoClose = popupPhoto.querySelector('.popup-photo__close');
-const popupPhotoImg = popupPhoto.querySelector('.popup-photo__img');
-const popupPhotoTitle = popupPhoto.querySelector('.popup-photo__title');
+//нахожу popupProfile
+const popupProfile = document.querySelector('.popup_profile');
+//закрытие
+const popupProfileClose = popupProfile.querySelector('.popup__close');
+//форма
+const formElementProfile = popupProfile.querySelector('.popup__form');
+//инпут имени
+const nameInputProfile = formElementProfile.querySelector('.popup__input_value_profile-name');
+//инпут профессии 
+const jobInputProfile = formElementProfile.querySelector('.popup__input_value_profile-prof');
+
+// для popup-img (карточки)
+// нахожу popup_img
+const popupImg = document.querySelector('.popup_img');
+//закрытие
+const popupImgClose = popupImg.querySelector('.popup__close');
+//форма
+const formElementImg = popupImg.querySelector('.popup__form');
+//инпут название карточки
+const nameInputImg = formElementImg.querySelector('.popup__input_value_card-name');
+//инпут ссылка на изображение
+const linkInputImg = formElementImg.querySelector('.popup__input_value_card-link');
 
 
-// для popup-img 
-const modalWindowImg = document.querySelector('.popup-img');
-const modalWindowCloseBtnImg = modalWindowImg.querySelector('.popup-img__close');
-const aboutProjectAdd = document.querySelector('.profile__add');
-const nameInputImg = formElement.querySelector('.popup-img__input_value_name');
-const linkInputImg = formElement.querySelector('.popup-img__input_value_link');
-const cardForm = document.querySelector('.popup-img__form');
+// для popup-photo (фото)
+const popupPhoto = document.querySelector('.popup_photo');
+const popupPhotoClose = popupPhoto.querySelector('.popup__close');
+const popupPhotoImg = popupPhoto.querySelector('.popup__photo-img');
+const popupPhotoTitle = popupPhoto.querySelector('.popup__photo-title');
+
+//кнопка редактирования
+const profileEdit = document.querySelector('.profile__edit');
+const profileInfoTitle = document.querySelector('.profile__title');
+const profileInfoSubtitle = document.querySelector('.profile__subtitle');
+// кнопка редактирования
+const cardAdd = document.querySelector('.profile__add');
+
+const closeButton = document.querySelector('.popup__close'); 
 
 const cardContainer = document.querySelector('.cards')
 const cardTemplate = document.querySelector('#card-template').content;
 
+const popup = document.querySelector('.popup');
 
 
-// функция для попапа редактирования профиля
-function addModalWindow() {
-    nameInput.value = profileInfoTitle.textContent;
-    jobInput.value = profileInfoSubtitle.textContent;
-    modalWindow.classList.add('popup_opened');
-}
-aboutProjectLink.addEventListener('click', addModalWindow);
 
-function removeModalWindow() {
-    modalWindow.classList.remove('popup_opened');
-}
+function createCard(element) {
+  const cardElement = cardTemplate.cloneNode(true);
+  const cardTitle = cardElement.querySelector('.card__title');
+  cardTitle.textContent = element.name;
+  const cardImage = cardElement.querySelector('.card__photo');
+  cardImage.src = element.link;
+  cardImage.alt = element.name;
+
+
+    //удаление 
+  const deleteButton = cardElement.querySelector('.card__del');
+  deleteButton.addEventListener('click', function (event) {
+      event.target.closest('.card').remove();
+  });
+
+  // like
+  const cardLike = cardElement.querySelector('.card__like');
+  cardLike.addEventListener('click', function (evt) {
+      evt.target.classList.toggle('card__like_active');
+  });
+
+  cardImage.addEventListener('click', function () {
+    popupPhotoImg.src = element.link;
+    popupPhotoImg.alt = element.name;
+    popupPhotoTitle.textContent = element.name;
+    openPopup(popupPhoto);
+  });
+
+  return cardElement;
+};
+
+const renderCard = (element) => {
+  const cardElement = createCard(element)
+  cardContainer.prepend(cardElement);
+  };
+
+function openPopup(popup) {
+  popup.classList.add('popup_opened');
+};
+
+function closePopup(popup) {
+  popup.classList.remove('popup_opened');
+};
+
+//копируем значения в value
+function copyFormEditProfile() { 
+  nameInputProfile.value = profileInfoTitle.textContent;
+  jobInputProfile.value = profileInfoSubtitle.textContent;
+};
 
 // обработчик отправки формы
 function formSubmitHandler (evt) {
-    evt.preventDefault() ;
+  evt.preventDefault() ;  
 
 //вставил новые значения 
-profileInfoTitle.textContent = nameInput.value;
-profileInfoSubtitle.textContent = jobInput.value;
-removeModalWindow();
+profileInfoTitle.textContent = nameInputProfile.value;
+profileInfoSubtitle.textContent = jobInputProfile.value;
+closePopup(popupProfile);
 };
 
+formElementProfile.addEventListener('submit', formSubmitHandler);
 
-formElement.addEventListener('submit', formSubmitHandler); 
-modalWindowCloseBtn.addEventListener('click', removeModalWindow);
+const addNewCard = (event) => {
+  event.preventDefault();
+  const newCard = {};
 
-// функция add для popup-img
-function addmodalWindowImg() {
-    modalWindowImg.classList.add('popup-img_opened');
-}
-aboutProjectAdd.addEventListener('click', addmodalWindowImg);
+  newCard.name = event.target.querySelector('.popup__input_value_card-name').value;
+  newCard.link = event.target.querySelector('.popup__input_value_card-link').value;
 
-// функция remove для popup-img
-function removemodalWindowImg() {
-    modalWindowImg.classList.remove('popup-img_opened');
-}
-modalWindowCloseBtnImg.addEventListener('click', removemodalWindowImg);
-
-
- 
-  const renderCard = (element) => {
-    const cardElement = cardTemplate.cloneNode(true);
-
-    const cardTitle = cardElement.querySelector('.card__title');
-    cardTitle.textContent = element.name;
-    const cardImage = cardElement.querySelector('.card__photo');
-    cardImage.src = element.link;
-    cardImage.alt = element.name;
-
-    //удаление 
-    const deleteButton = cardElement.querySelector('.card__del');
-    deleteButton.addEventListener('click', function (event) {
-        event.target.closest('.card').remove();
-    });
-
-    // like
-    const cardLike = cardElement.querySelector('.card__like');
-    cardLike.addEventListener('click', function (evt) {
-        evt.target.classList.toggle('card__like_active');
-    });
-
-    cardImage.addEventListener('click', function () {
-      popupPhotoImg.src = element.link;
-      popupPhotoImg.alt = element.name;
-      popupPhotoTitle.textContent = element.name;
-      togglePopupPhoto(popupPhoto);
-    });
-
-    popupPhotoClose.addEventListener('click', removePopupPhoto);
-    
-    cardContainer.prepend(cardElement);
+  renderCard(newCard);
+  closePopup(popupImg);
+  event.target.reset()
 };
+
+formElementImg.addEventListener('submit', addNewCard);
+
+profileEdit.addEventListener('click', function () {
+  openPopup(popupProfile);
+  copyFormEditProfile();
+});
+
+cardAdd.addEventListener('click', function () {
+  openPopup(popupImg);
+});
+
+//пытался сделать закрытие таким образом, но так и не смог понять, что не так.
+// closeButton.forEach(element => { 
+//   element.addEventListener('click', function (event) { 
+//     closePopup(event.target.closest('.popup')) });
+// })
+
+
+popupProfileClose.addEventListener('click', () => closePopup(popupProfile));
+
+popupImgClose.addEventListener('click', () => closePopup(popupImg));
+
+popupPhotoClose.addEventListener('click', () => closePopup(popupPhoto));
 
 initialCards.forEach(renderCard);
 
 
 
-function togglePopupPhoto (popupPhoto) {
-  popupPhoto.classList.toggle('popup-photo_opened');
-};
 
-function removePopupPhoto () {
-  popupPhoto.classList.remove('popup-photo_opened');
-}
 
-const addNewCard = (event) => {
-    event.preventDefault();
-    const newCard = {};
-
-    newCard.name = event.target.querySelector('.popup-img__input_value_name').value;
-    newCard.link = event.target.querySelector('.popup-img__input_value_link').value;
-
-    renderCard(newCard);
-    removemodalWindowImg(modalWindowImg);
-};
-
-cardForm.addEventListener('submit', addNewCard);
 
