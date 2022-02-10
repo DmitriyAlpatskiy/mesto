@@ -61,14 +61,11 @@ const profileInfoTitle = document.querySelector('.profile__title');
 const profileInfoSubtitle = document.querySelector('.profile__subtitle');
 // кнопка редактирования
 const cardAdd = document.querySelector('.profile__add');
-
 const closeButton = document.querySelector('.popup__close'); 
-
 const cardContainer = document.querySelector('.cards')
 const cardTemplate = document.querySelector('#card-template').content;
-
 const popup = document.querySelector('.popup');
-
+const closeButtons = document.querySelectorAll('.popup__close'); 
 
 
 function createCard(element) {
@@ -107,13 +104,31 @@ const renderCard = (element) => {
   cardContainer.prepend(cardElement);
   };
 
+
+function closePopupEscape(evt) {
+  if (evt.key === 'Escape') {
+    const fileOpen = document.querySelector('.popup_opened');
+    closePopup(fileOpen);
+  }
+};
+
+function closePopupOverley(evt) {
+  if (evt.target = evt.currentTarget) {
+    closePopup(evt.target);
+  }
+};
+
+
 function openPopup(popup) {
   popup.classList.add('popup_opened');
+  document.addEventListener('keydown', closePopupEscape);
+  document.addEventListener('click', closePopupOverley);
 };
 
 function closePopup(popup) {
   popup.classList.remove('popup_opened');
 };
+
 
 //копируем значения в value
 function copyFormEditProfile() { 
@@ -156,23 +171,14 @@ cardAdd.addEventListener('click', function () {
   openPopup(popupImg);
 });
 
-//пытался сделать закрытие таким образом, но так и не смог понять, что не так.
-// closeButton.forEach(element => { 
-//   element.addEventListener('click', function (event) { 
-//     closePopup(event.target.closest('.popup')) });
-// })
 
 
-popupProfileClose.addEventListener('click', () => closePopup(popupProfile));
+closeButtons.forEach(element => { 
+  element.addEventListener('click', function (event) { 
+    closePopup(event.target.closest('.popup')) });
+})
 
-popupImgClose.addEventListener('click', () => closePopup(popupImg));
-
-popupPhotoClose.addEventListener('click', () => closePopup(popupPhoto));
 
 initialCards.forEach(renderCard);
-
-
-
-
 
 

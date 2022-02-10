@@ -38,10 +38,37 @@
         <div class="popup__content">
             <button class="popup__close" type="button"></button>
             <h2 class="popup__title">Редактировать профиль</h2>
-            <form action="#" class="popup__form" name="popap-form">
-                <input type="text" class="popup__input popup__input_value_profile-name" placeholder="Имя" value="name" name="name" required>
-                <input type="text" class="popup__input popup__input_value_profile-prof" placeholder="Обо мне" value="proffessional" name="proffessional" required>
-                <input class="popup__save" type="submit" value="Сохранить" name="save">    
+            <form action="#" class="popup__form" name="formProfile" novalidate>
+                <input 
+                type="text" 
+                class="popup__input popup__input_value_profile-name" 
+                id="popup__input_name"
+                placeholder="Имя" 
+                value="name" 
+                name="name" 
+                required
+                minlength="2" maxlength="40"
+                >
+                <span class="popup__input-error popup__input_name-error">Покажи</span>  
+
+                <input 
+                type="text" 
+                class="popup__input popup__input_value_profile-prof" 
+                id="popup__input_prof"
+                placeholder="Обо мне" 
+                value="proffessional" 
+                name="proffessional" 
+                required
+                minlength="2" maxlength="200"
+                >
+                <span class="popup__input-error popup__input_prof-error"></span>
+
+                <input 
+                class="popup__save" 
+                type="submit" 
+                value="Сохранить" 
+                name="save"
+                >    
             </form> 
         </div>
     </div>
@@ -49,10 +76,32 @@
         <div class="popup__content">
             <button class="popup__close" type="button"></button>
             <h2 class="popup__title">Новое место</h2>
-            <form action="#" class="popup__form" name="popup-form">
-                <input type="text" class="popup__input popup__input_value_card-name" placeholder="Название" name="name" required>
-                <input type="text" class="popup__input popup__input_value_card-link" placeholder="Ссылка на картинку" name="link" required>
-                <input class="popup__save" type="submit" value="Сохранить" name="save">    
+            <form action="#" class="popup__form" name="formCard" novalidate>
+                <input 
+                type="text" 
+                class="popup__input popup__input_value_card-name" 
+                id="popup__input_place"
+                placeholder="Название" 
+                name="name" 
+                required
+                minlength="2" maxlength="30"
+                >
+                <span class="popup__input-error popup__input_place-error"></span>
+                <input 
+                type="url" 
+                class="popup__input popup__input_value_card-link" 
+                id="popup__input_url"
+                placeholder="Ссылка на картинку" 
+                name="link" 
+                required
+                >
+                <span class="popup__input-error popup__input_url-error"></span>
+                <input 
+                class="popup__save" 
+                type="submit" 
+                value="Сохранить" 
+                name="save"
+                >    
             </form> 
         </div>
     </div>
@@ -74,5 +123,6 @@
             </article>
     </template>
     <script src="./scripts/index.js"></script>
+    <script src="./scripts/validate.js"></script>
 </body>
 </html>
