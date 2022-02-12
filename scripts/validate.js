@@ -8,26 +8,27 @@ validationConfig = {
   }; 
   
   
-  const showInputError = (formElement, inputElement, errorMessage) => {
+  const showInputError = (formElement, inputElement, errorMessage, config) => {
     const errorElement = formElement.querySelector(`.${inputElement.id}-error`);
-    inputElement.classList.add(validationConfig.inputErrorClass);
+    inputElement.classList.add(config.inputErrorClass);
     errorElement.textContent = errorMessage;
-    errorElement.classList.add(validationConfig.errorClass);
+    errorElement.classList.add(config.errorClass);
   };
-  
-  const hideInputError = (formElement, inputElement) => {
+
+
+  const hideInputError = (formElement, inputElement, config) => {
     const errorElement = formElement.querySelector(`.${inputElement.id}-error`);
-    inputElement.classList.remove(validationConfig.inputErrorClass);
-    errorElement.classList.add(validationConfig.errorClass);
+    inputElement.classList.remove(config.inputErrorClass);
+    errorElement.classList.add(config.errorClass);
     errorElement.textContent = '';
   };
   
   
-  const isValid = (formElement, inputElement) => {
+  const isValid = (formElement, inputElement, config) => {
     if (!inputElement.validity.valid) {
-      showInputError(formElement, inputElement, inputElement.validationMessage)
+      showInputError(formElement, inputElement, inputElement.validationMessage, config)
     } else {
-      hideInputError(formElement, inputElement);
+      hideInputError(formElement, inputElement, config);
     }
   };
   
@@ -38,35 +39,39 @@ validationConfig = {
     })
   };
   
-  const toogleButtonState = (inputList, buttonElement) => {
-    if (hasInvalidInput(inputList)) {
-      buttonElement.classList.add(validationConfig.inactiveButtonClass);
-    } else {
-      buttonElement.classList.remove(validationConfig.inactiveButtonClass);
-    }
-  };
-  
-  const setEventListener = (formElement) => {
-    const inputList = Array.from(formElement.querySelectorAll(validationConfig.inputSelector));
-    //const inputList = Array.from(formElement.querySelectorAll('.popup__input'));
-    const buttonElement = formElement.querySelector(validationConfig.submitButtonSelector);
+
+  const setEventListener = (formElement, config) => {
+    const inputList = Array.from(formElement.querySelectorAll(config.inputSelector));
+    const buttonElement = formElement.querySelector(config.submitButtonSelector);
+    toogleButtonState(inputList, buttonElement, config);
     inputList.forEach((inputElement) => {
       inputElement.addEventListener('input', () => {
-        isValid(formElement, inputElement);
-        toogleButtonState(inputList, buttonElement);
+        isValid(formElement, inputElement, config);
+        toogleButtonState(inputList, buttonElement, config);
       });
     });
   };
+
+
+  const toogleButtonState = (inputList, buttonElement, config) => {
+    if (hasInvalidInput(inputList)) {
+      // buttonElement.setAttribute('disabled', true); тут у меня так и не сработала деактивация кнопки, не понимаю почему
+      buttonElement.classList.add(config.inactiveButtonClass);
+    } else {
+      // buttonElement.removeAttribute('disabled');
+      buttonElement.classList.remove(config.inactiveButtonClass);
+    }
+  };
+
   
-  
-  const enableValidation = () => {
-    const formList = Array.from(document.querySelectorAll(validationConfig.formSelector));
+  const enableValidation = (config) => {
+    const formList = Array.from(document.querySelectorAll(config.formSelector));
   
     formList.forEach((formElement) => {
       formElement.addEventListener('submit', (evt) => {
         evt.preventDefault();
       });
-      setEventListener(formElement);
+      setEventListener(formElement, config);
     });
   };
   

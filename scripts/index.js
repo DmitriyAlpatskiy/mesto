@@ -1,30 +1,3 @@
-const initialCards = [
-    {
-      name: 'Эльбрус, Кабардино-Балкария',
-      link: './images/elbrus.jpg'
-    },
-    {
-      name: 'Дагестан',
-      link: './images/dagestan.jpg'
-    },
-    {
-      name: 'Домбай',
-      link: './images/dombay.jpg'
-    },
-    {
-      name: 'Адыгея',
-      link: './images/mountains.jpg'
-    },
-    {
-      name: 'Ай-Петри',
-      link: './images/aypetri.jpg'
-    },
-    {
-      name: 'Севастополь',
-      link: './images/sevastopol.jpg'
-    }
-  ];
-
 //нахожу popupProfile
 const popupProfile = document.querySelector('.popup_profile');
 //закрытие
@@ -39,7 +12,7 @@ const jobInputProfile = formElementProfile.querySelector('.popup__input_value_pr
 // для popup-img (карточки)
 // нахожу popup_img
 const popupImg = document.querySelector('.popup_img');
-//закрытие
+//закрытие 
 const popupImgClose = popupImg.querySelector('.popup__close');
 //форма
 const formElementImg = popupImg.querySelector('.popup__form');
@@ -61,10 +34,8 @@ const profileInfoTitle = document.querySelector('.profile__title');
 const profileInfoSubtitle = document.querySelector('.profile__subtitle');
 // кнопка редактирования
 const cardAdd = document.querySelector('.profile__add');
-const closeButton = document.querySelector('.popup__close'); 
 const cardContainer = document.querySelector('.cards')
 const cardTemplate = document.querySelector('#card-template').content;
-const popup = document.querySelector('.popup');
 const closeButtons = document.querySelectorAll('.popup__close'); 
 
 
@@ -99,6 +70,7 @@ function createCard(element) {
   return cardElement;
 };
 
+
 const renderCard = (element) => {
   const cardElement = createCard(element)
   cardContainer.prepend(cardElement);
@@ -113,7 +85,7 @@ function closePopupEscape(evt) {
 };
 
 function closePopupOverley(evt) {
-  if (evt.target = evt.currentTarget) {
+  if (evt.target === evt.currentTarget) {
     closePopup(evt.target);
   }
 };
@@ -122,11 +94,13 @@ function closePopupOverley(evt) {
 function openPopup(popup) {
   popup.classList.add('popup_opened');
   document.addEventListener('keydown', closePopupEscape);
-  document.addEventListener('click', closePopupOverley);
+  popup.addEventListener('click', closePopupOverley);
 };
 
 function closePopup(popup) {
   popup.classList.remove('popup_opened');
+  document.removeEventListener('keydown', closePopupEscape);
+  popup.removeEventListener('click', closePopupOverley);
 };
 
 
@@ -137,7 +111,7 @@ function copyFormEditProfile() {
 };
 
 // обработчик отправки формы
-function formSubmitHandler (evt) {
+function submitProfileForm (evt) {
   evt.preventDefault() ;  
 
 //вставил новые значения 
@@ -146,18 +120,26 @@ profileInfoSubtitle.textContent = jobInputProfile.value;
 closePopup(popupProfile);
 };
 
-formElementProfile.addEventListener('submit', formSubmitHandler);
+formElementProfile.addEventListener('submit', submitProfileForm);
+
+const submitCardButton = formElementImg.querySelector('.popup__save');
+
+function turnOffSubmit(submitCardButton) {
+  submitCardButton.classList.add('popup__save_disabled');
+  submitCardButton.setAttribute('disabled', '');
+};
+
 
 const addNewCard = (event) => {
   event.preventDefault();
   const newCard = {};
-
-  newCard.name = event.target.querySelector('.popup__input_value_card-name').value;
-  newCard.link = event.target.querySelector('.popup__input_value_card-link').value;
-
+  newCard.name = nameInputImg .value;
+  newCard.link = linkInputImg.value;
   renderCard(newCard);
+  
   closePopup(popupImg);
   event.target.reset()
+  turnOffSubmit(submitCardButton);
 };
 
 formElementImg.addEventListener('submit', addNewCard);
@@ -170,7 +152,6 @@ profileEdit.addEventListener('click', function () {
 cardAdd.addEventListener('click', function () {
   openPopup(popupImg);
 });
-
 
 
 closeButtons.forEach(element => { 
