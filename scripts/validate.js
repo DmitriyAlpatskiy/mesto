@@ -55,10 +55,10 @@ validationConfig = {
 
   const toogleButtonState = (inputList, buttonElement, config) => {
     if (hasInvalidInput(inputList)) {
-      // buttonElement.setAttribute('disabled', true); тут у меня так и не сработала деактивация кнопки, не понимаю почему
+      buttonElement.setAttribute('disabled', true);
       buttonElement.classList.add(config.inactiveButtonClass);
     } else {
-      // buttonElement.removeAttribute('disabled');
+      buttonElement.removeAttribute('disabled');
       buttonElement.classList.remove(config.inactiveButtonClass);
     }
   };
