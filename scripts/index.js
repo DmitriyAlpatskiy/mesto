@@ -1,3 +1,7 @@
+import { initialCards } from './InitialCards.js';
+import {Card} from './Card.js'
+import { FormValidator } from './FormValidator1.js';
+
 //нахожу popupProfile
 const popupProfile = document.querySelector('.popup_profile');
 //закрытие
@@ -35,44 +39,30 @@ const profileInfoSubtitle = document.querySelector('.profile__subtitle');
 // кнопка редактирования
 const cardAdd = document.querySelector('.profile__add');
 const cardContainer = document.querySelector('.cards')
+const cardTemplateSelector = '#card-template'; 
 const cardTemplate = document.querySelector('#card-template').content;
 const closeButtons = document.querySelectorAll('.popup__close'); 
 
-
-function createCard(element) {
-  const cardElement = cardTemplate.cloneNode(true);
-  const cardTitle = cardElement.querySelector('.card__title');
-  cardTitle.textContent = element.name;
-  const cardImage = cardElement.querySelector('.card__photo');
-  cardImage.src = element.link;
-  cardImage.alt = element.name;
-
-
-    //удаление 
-  const deleteButton = cardElement.querySelector('.card__del');
-  deleteButton.addEventListener('click', function (event) {
-      event.target.closest('.card').remove();
-  });
-
-  // like
-  const cardLike = cardElement.querySelector('.card__like');
-  cardLike.addEventListener('click', function (evt) {
-      evt.target.classList.toggle('card__like_active');
-  });
-
-  cardImage.addEventListener('click', function () {
-    popupPhotoImg.src = element.link;
-    popupPhotoImg.alt = element.name;
-    popupPhotoTitle.textContent = element.name;
-    openPopup(popupPhoto);
-  });
-
-  return cardElement;
+const validationConfig = {
+  formSelector: '.popup__form',
+  inputSelector: '.popup__input',
+  submitButtonSelector: '.popup__save',
+  inactiveButtonClass: 'popup__save_disabled',
+  inputErrorClass: 'popup__input_type_error',
+  errorClass: 'popup__input-error_active',
 };
 
+const editFormValidator = new FormValidator(validationConfig, formElementProfile);
+const addCardFormValidator = new FormValidator(validationConfig, formElementImg);
 
-const renderCard = (element) => {
-  const cardElement = createCard(element)
+editFormValidator.enableValidation();
+addCardFormValidator.enableValidation();
+
+
+
+const renderCard = (data) => {
+  const card = new Card(data, cardTemplateSelector);
+  const cardElement = card.generateCard()
   cardContainer.prepend(cardElement);
   };
 
