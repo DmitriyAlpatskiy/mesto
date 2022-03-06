@@ -1,6 +1,6 @@
 import { initialCards } from './InitialCards.js';
 import {Card} from './Card.js'
-import { FormValidator } from './FormValidator1.js';
+import { FormValidator } from './FormValidator.js';
 
 //нахожу popupProfile
 const popupProfile = document.querySelector('.popup_profile');
@@ -58,19 +58,29 @@ const addCardFormValidator = new FormValidator(validationConfig, formElementImg)
 editFormValidator.enableValidation();
 addCardFormValidator.enableValidation();
 
+function handleCardClick (name, link) {
+  popupPhotoTitle.textContent = name;
+  popupPhotoImg.alt = name;
+  popupPhotoImg.src = link;
+  openPopup(popupPhoto);
+};
 
-
-const renderCard = (data) => {
-  const card = new Card(data, cardTemplateSelector);
+function createCard(item) {
+  const card = new Card(item, cardTemplateSelector, handleCardClick);
   const cardElement = card.generateCard()
+return cardElement
+}
+ 
+const renderCard = (data) => {
+  const cardElement = createCard(data);
   cardContainer.prepend(cardElement);
-  };
+};
 
 
 function closePopupEscape(evt) {
   if (evt.key === 'Escape') {
-    const fileOpen = document.querySelector('.popup_opened');
-    closePopup(fileOpen);
+    const openedPopup = document.querySelector('.popup_opened');
+    closePopup(openedPopup);
   }
 };
 
@@ -112,24 +122,16 @@ closePopup(popupProfile);
 
 formElementProfile.addEventListener('submit', submitProfileForm);
 
-const submitCardButton = formElementImg.querySelector('.popup__save');
-
-function turnOffSubmit(submitCardButton) {
-  submitCardButton.classList.add('popup__save_disabled');
-  submitCardButton.setAttribute('disabled', '');
-};
-
 
 const addNewCard = (event) => {
   event.preventDefault();
   const newCard = {};
-  newCard.name = nameInputImg .value;
+  newCard.name = nameInputImg.value;
   newCard.link = linkInputImg.value;
   renderCard(newCard);
   
   closePopup(popupImg);
-  event.target.reset()
-  turnOffSubmit(submitCardButton);
+  event.target.reset();
 };
 
 formElementImg.addEventListener('submit', addNewCard);
@@ -137,10 +139,12 @@ formElementImg.addEventListener('submit', addNewCard);
 profileEdit.addEventListener('click', function () {
   openPopup(popupProfile);
   copyFormEditProfile();
+  editFormValidator.resetValidation();
 });
 
 cardAdd.addEventListener('click', function () {
   openPopup(popupImg);
+  addCardFormValidator.resetValidation();
 });
 
 
@@ -151,5 +155,4 @@ closeButtons.forEach(element => {
 
 
 initialCards.forEach(renderCard);
-
 

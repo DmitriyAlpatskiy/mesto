@@ -1,14 +1,13 @@
-export class Card {
-  constructor(data, settings) {
+export  class Card {
+  constructor(data, settings, handleCardClick) {
     this._name = data.name;
     this._link = data.link;
     this._template = document.querySelector(settings).content.querySelector('.card');
-    this._like = settings.like;
-    this._delete = settings.delete;
-    this._cardPhoto = settings.cardPhoto;
-    this._cardTitle = settings.cardTitle;
+    this._handleCardClick = handleCardClick;
+
   }
 
+ 
   // возвращаем разметку
   _getTemplate() {
     this._cardElement = this._template.cloneNode(true);
@@ -42,14 +41,22 @@ export class Card {
   _deleteCard() {
     this._element.remove();
   }
+
   
+
   _setEventListeners() {
     this._elementLike.addEventListener('click', () => {
     this._addLike();
+  });
+
+  this._elementCardPhoto.addEventListener('click', () => {
+    this._handleCardClick(this._name, this._link);
   });
       
     this._elementDelete.addEventListener('click', () => {
       this._deleteCard();
     });
+
+
   }
 }
