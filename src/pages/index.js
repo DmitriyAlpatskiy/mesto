@@ -14,11 +14,11 @@ const userInfo = new UserInfo({
   jobSelector: '.profile__subtitle',
 });
 
-const editFormValidator = new FormValidator(validationConfig, formElementProfile);
-const addCardFormValidator = new FormValidator(validationConfig, formElementImg);
+const popupProfileFormValidator = new FormValidator(validationConfig, formElementProfile);
+const popuoAddPicFormValidator = new FormValidator(validationConfig, formElementImg);
 
-editFormValidator.enableValidation();
-addCardFormValidator.enableValidation();
+popupProfileFormValidator.enableValidation();
+popuoAddPicFormValidator.enableValidation();
 
 const cardList = new Section({
   items: initialCards,
@@ -64,14 +64,14 @@ function copyFormEditProfile() {
 
 
 profileEdit.addEventListener('click', function () {
-  popupEdit.open();
   copyFormEditProfile();
-  editFormValidator.resetValidation();
+  popupProfileFormValidator.resetValidation();
+  popupEdit.open();
 });
 
 cardAdd.addEventListener('click', function () {
+  popuoAddPicFormValidator.resetValidation();
   popupAdd.open();
-  addCardFormValidator.resetValidation();
 });
 
 function createCard(item) {
@@ -85,67 +85,3 @@ function createCard(item) {
   const cardElement = card.generateCard()
 return cardElement
 }
-
-// // обработчик отправки формы
-// function submitProfileForm (evt) {
-//   evt.preventDefault() ;  
-
-// //вставил новые значения 
-// profileInfoTitle.textContent = nameInputProfile.value;
-// profileInfoSubtitle.textContent = jobInputProfile.value;
-// closePopup(popupProfile);
-// };
-
-// formElementProfile.addEventListener('submit', submitProfileForm);
-
-
-// const addNewCard = (event) => {
-//   event.preventDefault();
-//   const newCard = {};
-//   newCard.name = nameInputImg.value;
-//   newCard.link = linkInputImg.value;
-//   renderCard(newCard);
-  
-//   closePopup(popupImg);
-//   event.target.reset();
-// };
-
-// formElementImg.addEventListener('submit', addNewCard);
-
-
-
-
-// closeButtons.forEach(element => { 
-//   element.addEventListener('click', function (event) { 
-//     closePopup(event.target.closest('.popup')) });
-// })
-
-
-
-
-
-
-
-
-
-// function createCard(item) {
-//   const card = new Card(
-//     item, 
-//     cardTemplateSelector, 
-//     handleCardClick);
-    
-//   const cardElement = card.generateCard()
-// return cardElement
-// }
-
-// function handleCardClick (name, link) {
-//   popupPhotoTitle.textContent = name;
-//   popupPhotoImg.alt = name;
-//   popupPhotoImg.src = link;
-//   openPopup(popupPhoto);
-// };
-
-// function renderCard(data) {
-//   const cardElement = createCard(data);
-//   cardContainer.prepend(cardElement);
-// };
