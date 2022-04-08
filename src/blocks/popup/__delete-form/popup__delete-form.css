@@ -1,0 +1,7 @@
+.popup__delete-form {
+    display: flex;
+    max-width: 358px;
+    width: 100%;
+    min-height: 0;
+    flex-direction: column;
+  }
