@@ -47,12 +47,14 @@ Promise.all([api.getUserInfo(), api.getInitialCards()])
     userInfo.setUserInfo(userData);
     cardsList.renderCards(cardsData);
   })
+  .catch((err) => {
+    console.log(err);
+})
 
 
 const popupAdd = new PopupWithForm ({
   popupSelector: popupImgSelector,
   handleFormSubmit: (cardContent) => {
-    
     api.addCard(cardContent)
     .then(cardContent => {
       cardsList.renderCard(cardContent);
@@ -61,6 +63,9 @@ const popupAdd = new PopupWithForm ({
     .finally(() => {
       popupAdd.toggleRenderLoading('Создать');
   })
+  .catch((err) => {
+    console.log(err);
+})
 }});
 
 popupAdd.setEventListener();
@@ -77,6 +82,9 @@ const popupEdit = new PopupWithForm({
     .finally(() => {
       popupEdit.toggleRenderLoading();
     })
+    .catch((err) => {
+      console.log(err);
+  })
   }});
 
 popupEdit.setEventListener();
@@ -93,6 +101,9 @@ const popupEditAvatar = new PopupWithForm({
     .finally(() => {
       popupEditAvatar.toggleRenderLoading()
     })
+    .catch((err) => {
+      console.log(err);
+  })
   }});
 
   popupEditAvatar.setEventListener();
@@ -111,6 +122,9 @@ const popupDeleteCardConfirmation = new PopupDeleteCard({
       .finally(() => {
         popupDeleteCardConfirmation.toggleRenderLoading();
       })
+      .catch((err) => {
+        console.log(err);
+    })
 }});
 
 popupDeleteCardConfirmation.setEventListener();
@@ -159,11 +173,17 @@ function createCardElement(cardContent) {
           .then(cardContent => {
             card.updateLikes(cardContent.likes)
           })
+          .catch((err) => {
+            console.log(err);
+        });
       } else {
         api.addCardLike(cardId)
           .then(cardContent => {
             card.updateLikes(cardContent.likes)
       })
+      .catch((err) => {
+        console.log(err);
+    });
     }
   }});
     

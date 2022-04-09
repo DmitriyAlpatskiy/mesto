@@ -9,8 +9,7 @@ export default class Api {
         return fetch(`${this._baseUrl}/users/me`, {
             headers: this._headers
         })
-        .then(res => res.ok ? res.json() : Promise.reject(res.status))
-        .catch(console.log)
+        .then(this._checkResponse);
     }
   
     //получение карточек
@@ -18,8 +17,7 @@ export default class Api {
         return fetch(`${this._baseUrl}/cards`, {
             headers: this._headers
         })
-        .then(res => res.ok ? res.json() : Promise.reject(res.status))
-        .catch(console.log)
+        .then(this._checkResponse);
     }
 
     //изменить инфо
@@ -29,8 +27,7 @@ export default class Api {
             headers: this._headers,
             body: JSON.stringify(userInfo)
         })
-        .then(res => res.ok ? res.json() : Promise.reject(res.status))
-        .catch(console.log)
+        .then(this._checkResponse);
     }
 
     //добавить карточку
@@ -40,8 +37,7 @@ export default class Api {
             headers: this._headers,
             body: JSON.stringify(cardContent)
         })
-        .then(res => res.ok ? res.json() : Promise.reject(res.status))
-        .catch(console.log)
+        .then(this._checkResponse);
     }
 
     //удалить карточку
@@ -50,8 +46,7 @@ export default class Api {
             method: "DELETE",
             headers: this._headers,
         })
-        .then(res => res.ok ? res.json() : Promise.reject(res.status))
-        .catch(console.log)
+        .then(this._checkResponse);
     }
 
     //добавить лайк
@@ -60,8 +55,7 @@ export default class Api {
             method: "PUT",
             headers: this._headers,
         })
-        .then(res => res.ok ? res.json() : Promise.reject(res.status))
-        .catch(console.log)
+        .then(this._checkResponse);
     }
 
     //удалить лайк
@@ -70,8 +64,7 @@ export default class Api {
             method: "DELETE",
             headers: this._headers,
         })
-        .then(res => res.ok ? res.json() : Promise.reject(res.status))
-        .catch(console.log)
+        .then(this._checkResponse);
     }
     
     //смена аватарки
@@ -81,9 +74,14 @@ export default class Api {
             headers: this._headers,
             body: JSON.stringify(avatarLink)
         })
-        .then(res => res.ok ? res.json() : Promise.reject(res.status))
-        .catch(console.log)
+        .then(this._checkResponse);
     }
 
-  }
+    _checkResponse(res) {
+        if (res.ok) {
+          return res.json();
+        }
+        return Promise.reject(`Ошибка: ${res.status}`);
+      }
 
+  }
