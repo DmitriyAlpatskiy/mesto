@@ -1,4 +1,4 @@
-import './../pages/index.css';
+import './index.css';
 
 import Card from '../components/Card.js'
 import FormValidator from '../components/FormValidator.js';
@@ -8,7 +8,7 @@ import PopupWithForm from '../components/PopupWithForm.js';
 import UserInfo from '../components/UserInfo.js';
 import { formElementProfile, nameInputProfile, jobInputProfile, popupImg,  formElementImg, popupPhoto, popupImgSelector, popupProfileSelector, profileEdit, cardAdd, cardContainer, cardTemplateSelector, validationConfig, formEditAvatar, avatarImage, popupEditAvatarSelector, popupConfirmationSelector} from '../utils/constants.js';
 import Api from '../components/Api.js'
-import PopupDeleteCard from '../components/PopupDeleteCard';
+import PopupDeleteCard from '../components/PopupDeleteCard.js';
 
 
 const api = new Api({
@@ -110,6 +110,8 @@ const popupEditAvatar = new PopupWithForm({
 
   const popupWithImage = new PopupWithImage(popupPhoto);
   popupWithImage.setEventListener();
+
+// console.log(popupConfirmationSelector);
 
 const popupDeleteCardConfirmation = new PopupDeleteCard({
   popupSelector: popupConfirmationSelector,

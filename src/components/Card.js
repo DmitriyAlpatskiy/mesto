@@ -6,8 +6,8 @@ export default class Card {
       likes, 
       owner: { _id: cardOwnerId },
       _id: cardId
-     }, templateSelector, userId, handleCardClick, handleDeleteClick, handleLikeClick}) {
-    
+    }, templateSelector, userId, handleCardClick, handleDeleteClick, handleLikeClick}) {
+
     this._name = name;
     this._link = link;
     this._userId = userId;
@@ -23,7 +23,6 @@ export default class Card {
     this._element.id = this._cardId;
     
     // запишем разметку в поле элемент 
-    this._element = this._getTemplate();
     this._elementLike = this._element.querySelector('.card__like');
     this._elementDelete = this._element.querySelector('.card__del');
     this._elementCardPhoto = this._element.querySelector('.card__photo');
@@ -46,6 +45,11 @@ export default class Card {
     this._elementLikeCounter.textContent = likes.length;
     this._setLikedStatus(likes);
   }
+
+  //  // Метод удаления карточки
+  //  _deleteCard() {
+  //   this._element.remove();
+  // }
 
   _setLikedStatus(likes) {
     const likesOwnersIds = likes.map(like => like._id);

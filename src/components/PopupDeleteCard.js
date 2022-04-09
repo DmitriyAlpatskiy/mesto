@@ -1,28 +1,30 @@
 import Popup from './Popup.js';
 
 export default class PopupDeleteCard extends Popup {
-  constructor({popupSelector, handleConfiramation}) {
-      super(popupSelector);
+  constructor({popupSelector, handleConfirmation}) {
+    super(popupSelector);
 
-      this._confirmationButton = this._popup.querySelector('.popup__save');
-      this._handleConfiramation = handleConfiramation;
+    this._confirmationButton = this._popup.querySelector('.popup__save');
+    this._handleConfirmation = handleConfirmation;
   }
 
   setEventListeners() {
     super.setEventListeners();
-    
-    this._confirmationButton.addEventListener('click', () => {
+
+    this._form.addEventListener('submit', (evt) => {
+      evt.preventDefault();
       this.toggleRenderLoading('Удаление...');
       this._handleConfirmation(this._cardId)
     });
   }
-
-setCardId(cardId) {
+  
+  setCardId(cardId) {
     this._cardId = cardId;
-    }
-    
-toggleRenderLoading(buttonText = 'Да') {
+  }
+
+  toggleRenderLoading(buttonText = 'Да') {
     this._confirmationButton.textContent = buttonText;
-    }
+  }
 }
 
+//this._confirmationButton = this._popup.querySelector('.popup__save');
