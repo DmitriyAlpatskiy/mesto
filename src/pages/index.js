@@ -120,6 +120,12 @@ const popupConfirm = new PopupWithForm({
     .then(res => {
       console.log('res', res)
     })
+    .finally(() => {
+      popupConfirm.toggleRenderLoading();
+    })
+    .catch((err) => {
+      console.log(err);
+    })
   } 
 })
 

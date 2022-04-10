@@ -50,7 +50,6 @@ export default class Api {
     }
 
 
-
     //добавить лайк
     addCardLike(cardId) {
         return fetch(`${this._baseUrl}/cards/${cardId}/likes`, {
