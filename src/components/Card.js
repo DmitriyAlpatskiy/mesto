@@ -63,6 +63,11 @@ export default class Card {
     }
   }
 
+  deleteCards() {
+    this._element.remove();
+
+    this._element = null;
+  }
  
   // возвращаем разметку
   _getTemplate() {

@@ -113,23 +113,35 @@ const popupEditAvatar = new PopupWithForm({
 
 // console.log(popupConfirmationSelector);
 
-const popupDeleteCardConfirmation = new PopupDeleteCard({
-  popupSelector: popupConfirmationSelector,
-  handleConfiramation: (cardId) => {
-  api.deleteCard(cardId)
-      .then(() => {
-        document.getElementById(cardId).remove();
-        popupDeleteCardConfirmation.close();
-      })
-      .finally(() => {
-        popupDeleteCardConfirmation.toggleRenderLoading();
-      })
-      .catch((err) => {
-        console.log(err);
+const popupConfirm = new PopupWithForm({
+  popupSelector: '.popup_delete',
+  handleFormSubmit: () => { 
+    api.deleteCard(cardId)
+    .then(res => {
+      console.log('res', res)
     })
-}});
+  } 
+})
 
-popupDeleteCardConfirmation.setEventListener();
+popupConfirm.setEventListener();
+
+// const popupDeleteCardConfirmation = new PopupDeleteCard({
+//   popupSelector: popupConfirmationSelector,
+//   handleConfirmation: (cardId) => {
+//   api.deleteCard(cardId)
+//       .then(() => {
+//         document.getElementById(cardId).remove();
+//         popupDeleteCardConfirmation.close();
+//       })
+//       .finally(() => {
+//         popupDeleteCardConfirmation.toggleRenderLoading();
+//       })
+//       .catch((err) => {
+//         console.log(err);
+//     })
+// }});
+
+// popupDeleteCardConfirmation.setEventListener();
 
 
 
@@ -166,8 +178,18 @@ function createCardElement(cardContent) {
       popupWithImage.open(name, link);
     },
     handleDeleteClick: (cardId) => {
-      popupDeleteCardConfirmation.open();
-      popupDeleteCardConfirmation.setCardId(cardId);
+      // console.log('cardId', cardId);
+      popupConfirm.open();
+      popupConfirm.changeSubmitHandler(() => {
+        api.deleteCard(cardId)
+        .then(res => {
+          card.deleteCards()
+          popupConfirm.close()
+          console.log(res)
+        })
+      })
+      //popupDeleteCardConfirmation.open();
+      // popupDeleteCardConfirmation.setCardId(cardId);
     },
     handleLikeClick: (cardId, isLiked) => {
       if (isLiked) {

@@ -49,6 +49,8 @@ export default class Api {
         .then(this._checkResponse);
     }
 
+
+
     //добавить лайк
     addCardLike(cardId) {
         return fetch(`${this._baseUrl}/cards/${cardId}/likes`, {
