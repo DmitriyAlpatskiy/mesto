@@ -9,6 +9,7 @@ import UserInfo from '../components/UserInfo.js';
 import { formElementProfile, nameInputProfile, jobInputProfile, popupImg,  formElementImg, popupPhoto, popupImgSelector, popupProfileSelector, profileEdit, cardAdd, cardContainer, cardTemplateSelector, validationConfig, formEditAvatar, avatarImage, popupEditAvatarSelector, popupConfirmationSelector} from '../utils/constants.js';
 import Api from '../components/Api.js'
 import PopupDeleteCard from '../components/PopupDeleteCard.js';
+import PopupConfirmationDelete from '../components/PopupConfirmationDelete.js';
 
 
 const api = new Api({
@@ -111,43 +112,12 @@ const popupEditAvatar = new PopupWithForm({
   const popupWithImage = new PopupWithImage(popupPhoto);
   popupWithImage.setEventListener();
 
-// console.log(popupConfirmationSelector);
 
-const popupConfirm = new PopupWithForm({
-  popupSelector: '.popup_delete',
-  handleFormSubmit: () => { 
-    api.deleteCard(cardId)
-    .then(res => {
-      console.log('res', res)
-    })
-    .finally(() => {
-      popupConfirm.toggleRenderLoading();
-    })
-    .catch((err) => {
-      console.log(err);
-    })
-  } 
+const popupConfirmationDelete = new PopupConfirmationDelete({
+  popupSelector: popupConfirmationSelector
 })
 
-popupConfirm.setEventListener();
-
-// const popupDeleteCardConfirmation = new PopupDeleteCard({
-//   popupSelector: popupConfirmationSelector,
-//   handleConfirmation: (cardId) => {
-//   api.deleteCard(cardId)
-//       .then(() => {
-//         document.getElementById(cardId).remove();
-//         popupDeleteCardConfirmation.close();
-//       })
-//       .finally(() => {
-//         popupDeleteCardConfirmation.toggleRenderLoading();
-//       })
-//       .catch((err) => {
-//         console.log(err);
-//     })
-// }});
-
-// popupDeleteCardConfirmation.setEventListener();
+popupConfirmationDelete.setEventListener();
 
 
 
@@ -184,19 +154,19 @@ function createCardElement(cardContent) {
       popupWithImage.open(name, link);
     },
     handleDeleteClick: (cardId) => {
-      // console.log('cardId', cardId);
-      popupConfirm.open();
-      popupConfirm.changeSubmitHandler(() => {
-        api.deleteCard(cardId)
-        .then(res => {
-          card.deleteCards()
-          popupConfirm.close()
-          console.log(res)
-        })
-      })
-      //popupDeleteCardConfirmation.open();
-      // popupDeleteCardConfirmation.setCardId(cardId);
-    },
+      popupConfirmationDelete.open()
+      popupConfirmationDelete.changeSubmitHandler(() => {
+      api.deleteCard(cardId)
+      .then(res => {
+      card.deleteCards()
+      popupConfirmationDelete.close()
+      console.log(res)
+    })
+    .catch((err) => {
+      console.log(err);
+  })
+  })
+  },
     handleLikeClick: (cardId, isLiked) => {
       if (isLiked) {
         api.removeCardLike(cardId)

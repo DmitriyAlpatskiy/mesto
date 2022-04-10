@@ -8,6 +8,10 @@ export default class PopupDeleteCard extends Popup {
     this._handleConfirmation = handleConfirmation;
   }
 
+  changeSubmitHandler(newSubmitHandler) {
+    this._handleFormSubmit = newSubmitHandler
+  }
+
   setEventListeners() {
     super.setEventListeners();
 
